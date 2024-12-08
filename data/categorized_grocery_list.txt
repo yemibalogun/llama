@@ -1,0 +1,58 @@
+After categorizing and sorting the grocery items, here is the list:
+
+**Produce:**
+• Apples
+• Bananas
+• Bell peppers
+• Carrots
+• Grapes
+• Lettuce
+• Onions
+• Oranges
+• Strawberries
+• Tomatoes
+
+**Dairy:**
+• Butter
+• Cheese
+• Eggs
+• Milk
+• Yogurt
+
+**Meat/Protein:**
+• Beans
+• Chicken breasts
+• Ground beef
+• Salmon
+• Tofu
+
+**Bakery:**
+• Bread
+• Crackers
+• Granola bars
+• Oats
+• Tortillas
+
+**Pantry:**
+• Chips
+• Coffee
+• Juice
+• Ketchup
+• Laundry detergent
+• Olive oil
+• Paper towels
+• Popcorn
+• Rice
+• Salt
+• Soda
+• Soy sauce
+• Trash bags
+
+**Beverages:**
+• Tea
+• Water
+
+**Household:**
+• Dish soap
+• Nuts
+• Tissues
