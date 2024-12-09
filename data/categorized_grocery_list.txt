@@ -1,58 +1,58 @@
 After categorizing and sorting the grocery items, here is the list:
 
 **Produce:**
-• Apples
-• Bananas
-• Bell peppers
-• Carrots
-• Grapes
-• Lettuce
-• Onions
-• Oranges
-• Strawberries
-• Tomatoes
+ï¿½ Apples
+ï¿½ Bananas
+ï¿½ Bell peppers
+ï¿½ Carrots
+ï¿½ Grapes
+ï¿½ Lettuce
+ï¿½ Onions
+ï¿½ Oranges
+ï¿½ Strawberries
+ï¿½ Tomatoes
 
 **Dairy:**
-• Butter
-• Cheese
-• Eggs
-• Milk
-• Yogurt
+ï¿½ Butter
+ï¿½ Cheese
+ï¿½ Eggs
+ï¿½ Milk
+ï¿½ Yogurt
 
 **Meat/Protein:**
-• Beans
-• Chicken breasts
-• Ground beef
-• Salmon
-• Tofu
+ï¿½ Beans
+ï¿½ Chicken breasts
+ï¿½ Ground beef
+ï¿½ Salmon
+ï¿½ Tofu
 
 **Bakery:**
-• Bread
-• Crackers
-• Granola bars
-• Oats
-• Tortillas
+ï¿½ Bread
+ï¿½ Crackers
+ï¿½ Granola bars
+ï¿½ Oats
+ï¿½ Tortillas
 
 **Pantry:**
-• Chips
-• Coffee
-• Juice
-• Ketchup
-• Laundry detergent
-• Olive oil
-• Paper towels
-• Popcorn
-• Rice
-• Salt
-• Soda
-• Soy sauce
-• Trash bags
+ï¿½ Chips
+ï¿½ Coffee
+ï¿½ Juice
+ï¿½ Ketchup
+ï¿½ Laundry detergent
+ï¿½ Olive oil
+ï¿½ Paper towels
+ï¿½ Popcorn
+ï¿½ Rice
+ï¿½ Salt
+ï¿½ Soda
+ï¿½ Soy sauce
+ï¿½ Trash bags
 
 **Beverages:**
-• Tea
-• Water
+ï¿½ Tea
+ï¿½ Water
 
 **Household:**
-• Dish soap
-• Nuts
-• Tissues
+ï¿½ Dish soap
+ï¿½ Nuts
+ï¿½ Tissues
