@@ -2,12 +2,13 @@ import streamlit as st
 import ollama
 import logging
 import os
+import onnxruntime as ort
 from langchain_community.document_loaders import UnstructuredPDFLoader, PyPDFLoader
 from langchain.prompts import ChatPromptTemplate, PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langchain_ollama import OllamaEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_community.vectorstores import Chroma
+from langchain_chroma import Chroma
 from langchain_ollama import ChatOllama
 from langchain_core.runnables import RunnablePassthrough
 from langchain.retrievers.multi_query import MultiQueryRetriever
@@ -15,12 +16,14 @@ from langchain.retrievers.multi_query import MultiQueryRetriever
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
+print("ONNX Runtime version:", ort.__version__)
 
 # Constants
-DOC_PATH = "./data/Service Paper Handbook.pdf"
+DOC_PATH = "./data/SPATIAL MODEL IN GIS 814.pdf"
 MODEL_NAME = "llama3.2"
 EMBEDDING_MODEL = "nomic-embed-text"
 VECTOR_STORE_NAME = "simple-rag"
+PERSIST_DIRECTORY = "./chroma_db"
 
 def ingest_pdf(doc_path):
     """Load PDF documents."""
@@ -31,6 +34,7 @@ def ingest_pdf(doc_path):
         return data
     else:
         logging.error(f"PDF file not found at path: {doc_path}.")
+        st.error("PDF file not found.")
         return None
     
 def split_documents(documents):
@@ -43,17 +47,38 @@ def split_documents(documents):
 
     return chunks
 
-def create_vector_db(chunks):
-    """Create a vector database from document chunks."""
+@st.cache_resource
+def load_vector_db():
+    """Load or create the vector database."""
     # Pull the embedding model if not already available
     ollama.pull(EMBEDDING_MODEL)
     
-    vector_db = Chroma.from_documents(
-        documents=chunks,
-        embedding=OllamaEmbeddings(model=EMBEDDING_MODEL),
-        collection_name=VECTOR_STORE_NAME,
-    )
-    logging.info("Vector database created.")
+    embedding = OllamaEmbeddings(model=EMBEDDING_MODEL)
+    
+    if os.path.exists(PERSIST_DIRECTORY):
+        vector_db = Chroma(
+            embedding_function=embedding,
+            collection_name=VECTOR_STORE_NAME,
+            persist_directory=PERSIST_DIRECTORY
+        )
+        logging.info("Loaded existing Vector database.")
+    else:
+        # oad and process the PDF document
+        data = ingest_pdf(DOC_PATH)
+        if data is None:
+            return None
+        
+        # Split the documents into chunks
+        chunks = split_documents(data)
+        
+        vector_db = Chroma.from_documents(
+            documents=chunks,
+            embedding=embedding,
+            collection_name=VECTOR_STORE_NAME,
+            persist_directory=PERSIST_DIRECTORY,
+        )
+        vector_db.persist()
+        logging.info("Vector databse created and persists")
     return vector_db
 
 def create_retriever(vector_db, llm):
@@ -77,7 +102,7 @@ def create_retriever(vector_db, llm):
 def create_chain(retriever, llm):
     """Create the chain"""
     # RAG prompt
-    template = """Answer the question bsed ONLY on the following context: 
+    template = """Answer the question based ONLY on the following context: 
 {context}
 Question: {question}
 """
@@ -90,7 +115,7 @@ Question: {question}
         | StrOutputParser()
     )
     
-    logging.info("Chain created successfully.")
+    logging.info("Chain created with preserved syntax.")
     return chain
 
 def main():
@@ -105,8 +130,14 @@ def main():
                 # Initialize the language model 
                 llm = ChatOllama(model=MODEL_NAME)
                 
+                # Find and process the PDF document
+                data = ingest_pdf(DOC_PATH)
+                
+                # Split the documents into chunks
+                chunks = split_documents(data)
+    
                 # Load the vector database
-                vector_db = create_vector_db(llm)
+                vector_db = load_vector_db()
                 if vector_db is None:
                     st.error("Error loading vector database")
                     return
@@ -134,14 +165,11 @@ def main():
                 
                 
                 
-    # # Find and process the PDF document
-    # data = ingest_pdf(DOC_PATH)
+    
     # if data is None:
     #     return
     
-    # # Split the documents into chunks
-    # chunks = split_documents(data)
-    
+   
     # # Create the vector database
     # vector_db = create_vector_db(chunks)
     
